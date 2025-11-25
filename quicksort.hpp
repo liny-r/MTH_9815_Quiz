@@ -7,31 +7,35 @@
 #include <vector>
 using namespace std;
 
-// Partition using the FIRST ELEMENT as pivot
+// ---- Helper: partition using FIRST element as pivot ----
 int partition(vector<int>& arr, int low, int high) {
-    int pivot = arr[low];   // pivot = first element
+    int pivot = arr[low];
     int left = low + 1;
     int right = high;
 
     while (true) {
-        while (left <= right && arr[left] <= pivot) {
-            left++;
-        }
-        while (left <= right && arr[right] > pivot) {
-            right--;
-        }
+        while (left <= right && arr[left] <= pivot) left++;
+        while (left <= right && arr[right] > pivot) right--;
+
         if (left > right) break;
         swap(arr[left], arr[right]);
     }
 
-    swap(arr[low], arr[right]); // place pivot correctly
+    swap(arr[low], arr[right]);
     return right;
 }
 
-void quicksort(vector<int>& arr, int low, int high) {
+// ---- Internal recursive helper (not exposed to user) ----
+void quicksortHelper(vector<int>& arr, int low, int high) {
     if (low < high) {
         int pivotIndex = partition(arr, low, high);
-        quicksort(arr, low, pivotIndex - 1);
-        quicksort(arr, pivotIndex + 1, high);
+        quicksortHelper(arr, low, pivotIndex - 1);
+        quicksortHelper(arr, pivotIndex + 1, high);
     }
+}
+
+// ---- PUBLIC FUNCTION: only takes array ----
+void quicksort(vector<int>& arr) {
+    if (arr.empty()) return;
+    quicksortHelper(arr, 0, arr.size() - 1);
 }

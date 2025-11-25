@@ -11,9 +11,9 @@ int main() {
     // ----------------------------
     vector<int> arr = {8, 3, 1, 7, 0, 10, 2};
 
-    quicksort(arr, 0, arr.size() - 1);
+    quicksort(arr);   // now only takes the array!
 
-    cout << "Sorted array using QuickSort: ";
+    cout << "Sorted array: ";
     for (int x : arr) cout << x << " ";
     cout << endl;
 
